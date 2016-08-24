@@ -1,4 +1,6 @@
 package com.dewafer.rpncalculator.core.token;
 
-public interface Operand extends Token {
+public interface Operand<V> extends Token {
+
+    V getValue();
 }

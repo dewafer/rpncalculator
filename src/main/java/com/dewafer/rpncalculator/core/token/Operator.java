@@ -1,8 +1,8 @@
 package com.dewafer.rpncalculator.core.token;
 
-public interface Operator extends OperatorToken, Comparable<OperatorToken> {
+public interface Operator<V> extends OperatorToken, Comparable<OperatorToken> {
 
     int getRequiredOperandNumber();
 
-    Operand calculate(Operand... operands);
+    Operand<V> calculate(Operand<V>... operands);
 }
