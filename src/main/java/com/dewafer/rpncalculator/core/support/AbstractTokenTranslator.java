@@ -1,4 +1,4 @@
-package com.dewafer.rpncalculator.core.token.support;
+package com.dewafer.rpncalculator.core.support;
 
 import com.dewafer.rpncalculator.core.TokenTranslatorProcessor;
 import com.dewafer.rpncalculator.core.exception.UnsupportedTokenException;
@@ -6,11 +6,16 @@ import com.dewafer.rpncalculator.core.token.LeftParenthesis;
 import com.dewafer.rpncalculator.core.token.RightParenthesis;
 import com.dewafer.rpncalculator.core.token.Token;
 
+/**
+ * Token翻译器，负责将指定类型T翻译成Token。子类必须实现translate、isLeftParenthesis、isRightParenthesis方法。
+ *
+ * @param <T> 传入指定类型T
+ */
 public abstract class AbstractTokenTranslator<T> extends SingleStepProcessor<T, Token> implements TokenTranslatorProcessor<T> {
 
 
     @Override
-    protected Token process(T t) {
+    protected final Token process(T t) {
         if (isLeftParenthesis(t)) {
             return getLeftParenthesis();
         }

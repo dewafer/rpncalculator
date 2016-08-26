@@ -6,6 +6,11 @@ import com.dewafer.rpncalculator.core.TokenReaderProcessor;
 import com.dewafer.rpncalculator.core.token.Token;
 import com.dewafer.rpncalculator.core.token.TokenReader;
 
+/**
+ * 本处理器负责处理TokenReader，将TokenReader中所有的token导入nextProcessor。可多次push TokenReader。
+ *
+ * @param <R> 最终返回值的类型
+ */
 public class TokenReaderProcessorImpl<R> implements TokenReaderProcessor<R> {
 
     private TokenProcessor<R> nextProcessor;

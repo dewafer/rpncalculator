@@ -9,6 +9,11 @@ import com.dewafer.rpncalculator.core.token.support.Associativity;
 import java.util.Deque;
 import java.util.LinkedList;
 
+/**
+ * 本类实现了调度场算法。参考：https://en.wikipedia.org/wiki/Shunting-yard_algorithm
+ *
+ * @param <R> 最终返回值的类型
+ */
 public class ShuntingYardTokenProcessor<R> implements TokenProcessor<R> {
 
     private Deque<Token> operatorStack = new LinkedList<Token>();

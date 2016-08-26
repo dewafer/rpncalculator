@@ -1,7 +1,7 @@
 package com.dewafer.rpncalculator.extend.token.impl;
 
 import com.dewafer.rpncalculator.core.token.Token;
-import com.dewafer.rpncalculator.core.token.support.AbstractTokenTranslator;
+import com.dewafer.rpncalculator.core.support.AbstractTokenTranslator;
 import com.dewafer.rpncalculator.extend.token.impl.logical.BooleanLogicalOperator;
 import com.dewafer.rpncalculator.extend.token.impl.logical.BooleanOperand;
 

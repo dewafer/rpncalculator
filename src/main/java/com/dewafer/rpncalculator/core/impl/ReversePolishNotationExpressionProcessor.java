@@ -12,6 +12,12 @@ import com.dewafer.rpncalculator.core.token.Token;
 import java.util.Deque;
 import java.util.LinkedList;
 
+/**
+ * 本类实现了逆波兰表达式算法。
+ * 参考：https://en.wikipedia.org/wiki/Reverse_Polish_notation
+ *
+ * @param <V> 最终返回值的类型
+ */
 public class ReversePolishNotationExpressionProcessor<V> implements TokenProcessor<Operand<V>> {
 
     private Deque<Operand<V>> operandStack = new LinkedList<Operand<V>>();
