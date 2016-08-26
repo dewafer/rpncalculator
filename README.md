@@ -1,7 +1,7 @@
 RPN Calculator
 --------------
 
-使用逆波兰表达式（[Reverse Polish notation](https://en.wikipedia.org/wiki/Reverse_Polish_notation)）以及调度场算法（[Shunting-yard algorithm](https://en.wikipedia.org/wiki/Shunting-yard_algorithm)）实现的同用计算框架。暂不支持Function。
+使用逆波兰表达式（[Reverse Polish notation](https://en.wikipedia.org/wiki/Reverse_Polish_notation)）以及调度场算法（[Shunting-yard algorithm](https://en.wikipedia.org/wiki/Shunting-yard_algorithm)）实现的通用计算框架。暂不支持Function。
 
 仅使用Java SE 6实现。（单元测试用到了mockito）
 
