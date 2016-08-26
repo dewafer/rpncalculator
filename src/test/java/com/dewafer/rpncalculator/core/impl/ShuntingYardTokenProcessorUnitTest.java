@@ -4,6 +4,8 @@ import com.dewafer.rpncalculator.core.TokenProcessor;
 import com.dewafer.rpncalculator.core.exception.MismatchedParenthesesException;
 import com.dewafer.rpncalculator.core.exception.UnsupportedTokenException;
 import com.dewafer.rpncalculator.core.token.*;
+import com.dewafer.rpncalculator.core.token.support.Associativity;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -14,10 +16,13 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.*;
+import static org.mockito.BDDMockito.inOrder;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ShuntingYardTokenProcessorUnitTest {
@@ -55,6 +60,14 @@ public class ShuntingYardTokenProcessorUnitTest {
 
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
+
+    @Before
+    public void setUp(){
+        // given
+        given(operatorPlus.getAssociativity()).willReturn(Associativity.LEFT);
+        given(operatorPlusSecond.getAssociativity()).willReturn(Associativity.LEFT);
+        given(operatorMultiply.getAssociativity()).willReturn(Associativity.LEFT);
+    }
 
     @Test
     public void testPush_pushOperand() {

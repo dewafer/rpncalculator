@@ -1,6 +1,10 @@
 package com.dewafer.rpncalculator.core.token;
 
-public interface Operator<V> extends OperatorToken, Comparable<OperatorToken> {
+import com.dewafer.rpncalculator.core.token.support.Associativity;
+
+public interface Operator<V> extends Token, Comparable<Operator> {
+
+    Associativity getAssociativity();
 
     int getRequiredOperandNumber();
 

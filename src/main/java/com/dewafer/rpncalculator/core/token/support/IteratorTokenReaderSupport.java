@@ -5,7 +5,7 @@ import com.dewafer.rpncalculator.core.token.TokenReader;
 
 import java.util.Iterator;
 
-public abstract class AbstractTokenReaderSupport implements TokenReader {
+public abstract class IteratorTokenReaderSupport implements TokenReader {
 
     protected abstract boolean hasNext();
 
@@ -16,12 +16,12 @@ public abstract class AbstractTokenReaderSupport implements TokenReader {
         return new Iterator<Token>() {
             @Override
             public boolean hasNext() {
-                return AbstractTokenReaderSupport.this.hasNext();
+                return IteratorTokenReaderSupport.this.hasNext();
             }
 
             @Override
             public Token next() {
-                return AbstractTokenReaderSupport.this.next();
+                return IteratorTokenReaderSupport.this.next();
             }
 
             @Override

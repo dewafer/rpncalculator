@@ -12,12 +12,12 @@ import com.dewafer.rpncalculator.core.token.Token;
 import java.util.Deque;
 import java.util.LinkedList;
 
-public class ReversePolishNotationExpressionProcessor implements TokenProcessor<Operand> {
+public class ReversePolishNotationExpressionProcessor<V> implements TokenProcessor<Operand<V>> {
 
-    private Deque<Operand> operandStack = new LinkedList<Operand>();
+    private Deque<Operand<V>> operandStack = new LinkedList<Operand<V>>();
 
     @Override
-    public ReversePolishNotationExpressionProcessor push(Token token) {
+    public ReversePolishNotationExpressionProcessor<V> push(Token token) {
         if (token instanceof Operand) {
             process((Operand) token);
             return this;
@@ -50,14 +50,15 @@ public class ReversePolishNotationExpressionProcessor implements TokenProcessor<
             arguments.push(operandStack.pop());
         }
 
-        Operand calculatedResult = operator.calculate(arguments.toArray(new Operand[operator.getRequiredOperandNumber()]));
+        @SuppressWarnings("unchecked")
+        Operand<V> calculatedResult = operator.calculate(arguments.toArray(new Operand[0]));
         if (calculatedResult != null) {
             operandStack.push(calculatedResult);
         }
     }
 
     @Override
-    public Operand done() {
+    public Operand<V> done() {
         if (operandStack.size() > 1) {
             throw new TooManyOperandsException();
         }
