@@ -1,6 +1,6 @@
 package com.dewafer.rpncalculator.extend.token.impl.logical;
 
-import com.dewafer.rpncalculator.core.token.support.AbstractValueCalculateOperator;
+import com.dewafer.rpncalculator.core.token.support.AbstractNamedOperator;
 import com.dewafer.rpncalculator.core.token.support.Associativity;
 
 import java.util.Collection;
@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BooleanLogicalOperator extends AbstractValueCalculateOperator<Boolean> {
+public class BooleanLogicalOperator extends AbstractNamedOperator<Boolean> {
 
     private static final Map<String, String> SYMBOL_NAME_MAP;
 

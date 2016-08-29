@@ -1,15 +1,12 @@
 package com.dewafer.rpncalculator.core.token.support;
 
 import com.dewafer.rpncalculator.core.token.Operand;
+import com.dewafer.rpncalculator.core.token.Operator;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.ParameterizedType;
 
-public abstract class AbstractValueCalculateOperator<V> extends AbstractNamedOperator<V> {
-
-    public AbstractValueCalculateOperator(String name) {
-        super(name);
-    }
+public abstract class AbstractValueCalculateOperator<V> implements Operator<V> {
 
     @SuppressWarnings("unchecked")
     @Override

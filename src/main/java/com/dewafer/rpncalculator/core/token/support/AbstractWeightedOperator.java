@@ -2,7 +2,7 @@ package com.dewafer.rpncalculator.core.token.support;
 
 import com.dewafer.rpncalculator.core.token.Operator;
 
-public abstract class AbstractWeightedOperator<V> implements Operator<V> {
+public abstract class AbstractWeightedOperator<V> extends AbstractValueCalculateOperator<V> {
 
     public abstract int getWeight();
 
