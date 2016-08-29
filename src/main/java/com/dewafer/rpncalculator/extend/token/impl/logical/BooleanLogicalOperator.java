@@ -4,51 +4,72 @@ import com.dewafer.rpncalculator.core.token.Operand;
 import com.dewafer.rpncalculator.core.token.support.AbstractNamedOperator;
 import com.dewafer.rpncalculator.core.token.support.Associativity;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BooleanLogicalOperator extends AbstractNamedOperator<Boolean> {
 
-    public static final Collection<String> SUPPORTED_NAMES = Collections.unmodifiableCollection(
-            Arrays.asList("!", "&&", "||", "->", "<->")
-    );
+    private static final Map<String, String> SYMBOL_NAME_MAP;
 
     private static final Map<String, Integer> OPERATOR_WEIGHT_MAP;
 
+    private static final String NAME_NOT = "not";
+
+    private static final String NAME_AND = "and";
+
+    private static final String NAME_OR = "or";
+
+    private static final String NAME_IF_THEN = "if-then";
+
+    private static final String NAME_IF_AND_ONLY_IF = "if-and-only-if";
+
     static {
-        Map<String, Integer> map = new HashMap<String, Integer>();
-        map.put("!", 4);
-        map.put("&&", 3);
-        map.put("||", 2);
-        map.put("->", 1);
-        map.put("<->", 0);
-        OPERATOR_WEIGHT_MAP = Collections.unmodifiableMap(map);
+        Map<String, String> symbolNameMap = new HashMap<String, String>();
+        symbolNameMap.put("!", NAME_NOT);
+        symbolNameMap.put("&&", NAME_AND);
+        symbolNameMap.put("||", NAME_OR);
+        symbolNameMap.put("->", NAME_IF_THEN);
+        symbolNameMap.put("<->", NAME_IF_AND_ONLY_IF);
+        SYMBOL_NAME_MAP = Collections.unmodifiableMap(symbolNameMap);
+
+        Map<String, Integer> operatorWeightMap = new HashMap<String, Integer>();
+        operatorWeightMap.put(NAME_NOT, 4);
+        operatorWeightMap.put(NAME_AND, 3);
+        operatorWeightMap.put(NAME_OR, 2);
+        operatorWeightMap.put(NAME_IF_THEN, 1);
+        operatorWeightMap.put(NAME_IF_AND_ONLY_IF, 0);
+        OPERATOR_WEIGHT_MAP = Collections.unmodifiableMap(operatorWeightMap);
     }
 
-    public BooleanLogicalOperator(String name) {
-        super(name);
+    public static final Collection<String> SUPPORTED_SYMBOLS = SYMBOL_NAME_MAP.keySet();
+
+    public BooleanLogicalOperator(String symbol) {
+        super(SYMBOL_NAME_MAP.get(symbol));
     }
 
     @Override
     public int getRequiredOperandNumber() {
-        return "!".equals(getName()) ? 1 : 2;
+        return NAME_NOT.equals(getName()) ? 1 : 2;
     }
 
     @Override
     public Operand<Boolean> calculate(Operand<Boolean>... operands) {
-        if ("!".equals(getName())) {
+        if (NAME_NOT.equals(getName())) {
             return new BooleanOperand(!operands[0].getValue());
         }
-        if ("&&".equals(getName())) {
+        if (NAME_AND.equals(getName())) {
             return new BooleanOperand(operands[0].getValue() && operands[1].getValue());
         }
-        if ("||".equals(getName())) {
+        if (NAME_OR.equals(getName())) {
             return new BooleanOperand(operands[0].getValue() || operands[1].getValue());
         }
-        if ("->".equals(getName())) {
+        if (NAME_IF_THEN.equals(getName())) {
             // A -> B equals !A || B
             return new BooleanOperand(!operands[0].getValue() || operands[1].getValue());
         }
-        if ("<->".equals(getName())) {
+        if (NAME_IF_AND_ONLY_IF.equals(getName())) {
             // <-> equals !XOR equals (A && B) || (!A && !B)
             return new BooleanOperand((operands[0].getValue() && operands[1].getValue())
                     || (!operands[0].getValue() && !operands[1].getValue()));
@@ -64,6 +85,6 @@ public class BooleanLogicalOperator extends AbstractNamedOperator<Boolean> {
 
     @Override
     public Associativity getAssociativity() {
-        return "!".equals(getName()) ? Associativity.RIGHT : Associativity.LEFT;
+        return NAME_NOT.equals(getName()) ? Associativity.RIGHT : Associativity.LEFT;
     }
 }

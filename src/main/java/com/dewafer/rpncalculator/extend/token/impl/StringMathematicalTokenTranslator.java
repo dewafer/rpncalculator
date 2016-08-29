@@ -12,7 +12,7 @@ public class StringMathematicalTokenTranslator extends AbstractTokenTranslator<S
     @Override
     protected Token translate(String s) {
 
-        if (IntegerMathematicalOperator.SUPPORTED_NAMES.contains(s)) {
+        if (IntegerMathematicalOperator.SUPPORTED_SYMBOLS.contains(s)) {
             return new IntegerMathematicalOperator(s);
         }
 

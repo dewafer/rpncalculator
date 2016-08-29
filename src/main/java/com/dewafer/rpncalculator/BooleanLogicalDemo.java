@@ -1,10 +1,7 @@
 package com.dewafer.rpncalculator;
 
+import com.dewafer.rpncalculator.core.RPNCalculator;
 import com.dewafer.rpncalculator.core.exception.UnsupportedTokenException;
-import com.dewafer.rpncalculator.core.impl.ReversePolishNotationExpressionProcessor;
-import com.dewafer.rpncalculator.core.impl.ShuntingYardTokenProcessor;
-import com.dewafer.rpncalculator.core.impl.TokenReaderProcessorImpl;
-import com.dewafer.rpncalculator.core.token.Operand;
 import com.dewafer.rpncalculator.extend.token.impl.ScannerTokenReader;
 import com.dewafer.rpncalculator.extend.token.impl.StringLogicalTokenTranslator;
 
@@ -18,9 +15,7 @@ public class BooleanLogicalDemo {
         System.out.println("| Example input: true && ! false =(press enter)      |");
         System.out.println("======================================================");
 
-        TokenReaderProcessorImpl<Operand<Integer>> processor = new TokenReaderProcessorImpl<Operand<Integer>>(
-                new ShuntingYardTokenProcessor<Operand<Integer>>(
-                        new ReversePolishNotationExpressionProcessor<Integer>()));
+        RPNCalculator<Integer> processor = new RPNCalculator<Integer>();
 
         ScannerTokenReader tokenReader = new ScannerTokenReader(
                 new Scanner(System.in), new StringLogicalTokenTranslator());

@@ -11,11 +11,11 @@ public class StringLogicalTokenTranslator extends AbstractTokenTranslator<String
     @Override
     protected Token translate(String s) {
 
-        if (BooleanLogicalOperator.SUPPORTED_NAMES.contains(s)) {
+        if (BooleanLogicalOperator.SUPPORTED_SYMBOLS.contains(s)) {
             return new BooleanLogicalOperator(s);
         }
 
-        if (Pattern.matches("^true|TRUE|T|t|false|FALSE|F|t$", s)) {
+        if (Pattern.matches("^true|TRUE|T|t|false|FALSE|F|f$", s)) {
             return new BooleanOperand(Boolean.parseBoolean(s));
         }
 
