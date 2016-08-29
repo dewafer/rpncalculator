@@ -1,7 +1,6 @@
 package com.dewafer.rpncalculator.extend.token.impl.logical;
 
-import com.dewafer.rpncalculator.core.token.Operand;
-import com.dewafer.rpncalculator.core.token.support.AbstractNamedOperator;
+import com.dewafer.rpncalculator.core.token.support.AbstractValueCalculateOperator;
 import com.dewafer.rpncalculator.core.token.support.Associativity;
 
 import java.util.Collection;
@@ -9,7 +8,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BooleanLogicalOperator extends AbstractNamedOperator<Boolean> {
+public class BooleanLogicalOperator extends AbstractValueCalculateOperator<Boolean> {
 
     private static final Map<String, String> SYMBOL_NAME_MAP;
 
@@ -55,24 +54,24 @@ public class BooleanLogicalOperator extends AbstractNamedOperator<Boolean> {
     }
 
     @Override
-    public Operand<Boolean> calculate(Operand<Boolean>... operands) {
+    protected Boolean executeCalculate(Boolean... values) {
         if (NAME_NOT.equals(getName())) {
-            return new BooleanOperand(!operands[0].getValue());
+            return !values[0];
         }
         if (NAME_AND.equals(getName())) {
-            return new BooleanOperand(operands[0].getValue() && operands[1].getValue());
+            return values[0] && values[1];
         }
         if (NAME_OR.equals(getName())) {
-            return new BooleanOperand(operands[0].getValue() || operands[1].getValue());
+            return values[0] || values[1];
         }
         if (NAME_IF_THEN.equals(getName())) {
             // A -> B equals !A || B
-            return new BooleanOperand(!operands[0].getValue() || operands[1].getValue());
+            return !values[0] || values[1];
         }
         if (NAME_IF_AND_ONLY_IF.equals(getName())) {
             // <-> equals !XOR equals (A && B) || (!A && !B)
-            return new BooleanOperand((operands[0].getValue() && operands[1].getValue())
-                    || (!operands[0].getValue() && !operands[1].getValue()));
+            return (values[0] && values[1])
+                    || (!values[0] && !values[1]);
         }
 
         throw new UnsupportedOperationException();

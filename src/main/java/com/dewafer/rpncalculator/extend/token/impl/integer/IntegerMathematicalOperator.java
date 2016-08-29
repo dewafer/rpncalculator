@@ -1,7 +1,6 @@
 package com.dewafer.rpncalculator.extend.token.impl.integer;
 
-import com.dewafer.rpncalculator.core.token.Operand;
-import com.dewafer.rpncalculator.core.token.support.AbstractNamedOperator;
+import com.dewafer.rpncalculator.core.token.support.AbstractValueCalculateOperator;
 import com.dewafer.rpncalculator.core.token.support.Associativity;
 
 import java.util.Collection;
@@ -9,7 +8,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class IntegerMathematicalOperator extends AbstractNamedOperator<Integer> {
+public class IntegerMathematicalOperator extends AbstractValueCalculateOperator<Integer> {
 
     private static final Map<String, String> SYMBOL_NAME_MAP;
 
@@ -52,18 +51,18 @@ public class IntegerMathematicalOperator extends AbstractNamedOperator<Integer> 
     }
 
     @Override
-    public Operand<Integer> calculate(Operand<Integer>... operands) {
+    protected Integer executeCalculate(Integer... values) {
         if (NAME_ADD.equals(getName())) {
-            return new IntegerOperand(operands[0].getValue() + operands[1].getValue());
+            return values[0] + values[1];
         }
         if (NAME_MINUS.equals(getName())) {
-            return new IntegerOperand(operands[0].getValue() - operands[1].getValue());
+            return values[0] - values[1];
         }
         if (NAME_MULTIPLY.equals(getName())) {
-            return new IntegerOperand(operands[0].getValue() * operands[1].getValue());
+            return values[0] * values[1];
         }
         if (NAME_DIVIDE.equals(getName())) {
-            return new IntegerOperand(operands[0].getValue() / operands[1].getValue());
+            return values[0] / values[1];
         }
         throw new UnsupportedOperationException();
     }
