@@ -1,13 +1,13 @@
 package com.dewafer.rpncalculator.extend.token.impl;
 
 import com.dewafer.rpncalculator.core.token.Token;
-import com.dewafer.rpncalculator.core.support.AbstractTokenTranslator;
 import com.dewafer.rpncalculator.extend.token.impl.integer.IntegerMathematicalOperator;
 import com.dewafer.rpncalculator.extend.token.impl.integer.IntegerOperand;
+import com.dewafer.rpncalculator.extend.token.impl.support.AbstractStringTokenTranslator;
 
 import java.util.regex.Pattern;
 
-public class StringMathematicalTokenTranslator extends AbstractTokenTranslator<String> {
+public class MathematicalTokenTranslator extends AbstractStringTokenTranslator {
 
     @Override
     protected Token translate(String s) {
@@ -22,16 +22,5 @@ public class StringMathematicalTokenTranslator extends AbstractTokenTranslator<S
 
         return null;
     }
-
-    @Override
-    protected boolean isLeftParenthesis(String s) {
-        return "(".equals(s);
-    }
-
-    @Override
-    protected boolean isRightParenthesis(String s) {
-        return ")".equals(s);
-    }
-
 
 }

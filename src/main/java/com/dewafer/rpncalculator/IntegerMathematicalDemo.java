@@ -3,7 +3,7 @@ package com.dewafer.rpncalculator;
 import com.dewafer.rpncalculator.core.RPNCalculator;
 import com.dewafer.rpncalculator.core.exception.UnsupportedTokenException;
 import com.dewafer.rpncalculator.extend.token.impl.ScannerTokenReader;
-import com.dewafer.rpncalculator.extend.token.impl.StringMathematicalTokenTranslator;
+import com.dewafer.rpncalculator.extend.token.impl.MathematicalTokenTranslator;
 
 import java.util.Scanner;
 
@@ -18,7 +18,7 @@ public class IntegerMathematicalDemo {
         RPNCalculator<Integer> processor = new RPNCalculator<Integer>();
 
         ScannerTokenReader tokenReader = new ScannerTokenReader(
-                new Scanner(System.in), new StringMathematicalTokenTranslator());
+                new Scanner(System.in), new MathematicalTokenTranslator());
 
         try {
             processor.push(tokenReader);
