@@ -6,12 +6,12 @@ import com.dewafer.rpncalculator.core.token.support.IteratorTokenReaderSupport;
 
 import java.util.Scanner;
 
-public class ScannerTokenReader extends IteratorTokenReaderSupport {
+public class ScannerTokenReader<R> extends IteratorTokenReaderSupport<R> {
 
     private Scanner scanner;
-    private TokenTranslatorProcessor<String> translator;
+    private TokenTranslatorProcessor<String, R> translator;
 
-    public ScannerTokenReader(Scanner scanner, TokenTranslatorProcessor<String> translator) {
+    public ScannerTokenReader(Scanner scanner, TokenTranslatorProcessor<String, R> translator) {
         this.scanner = scanner;
         this.translator = translator;
     }
@@ -22,11 +22,11 @@ public class ScannerTokenReader extends IteratorTokenReaderSupport {
     }
 
     @Override
-    protected Token next() {
+    protected Token<R> next() {
         return translate(scanner.next());
     }
 
-    private Token translate(String s) {
+    private Token<R> translate(String s) {
         return translator.push(s).done();
     }
 }

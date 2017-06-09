@@ -5,22 +5,22 @@ import com.dewafer.rpncalculator.core.token.TokenReader;
 
 import java.util.Iterator;
 
-public abstract class IteratorTokenReaderSupport implements TokenReader {
+public abstract class IteratorTokenReaderSupport<R> implements TokenReader<R> {
 
     protected abstract boolean hasNext();
 
-    protected abstract Token next();
+    protected abstract Token<R> next();
 
     @Override
-    public Iterator<Token> iterator() {
-        return new Iterator<Token>() {
+    public Iterator<Token<R>> iterator() {
+        return new Iterator<Token<R>>() {
             @Override
             public boolean hasNext() {
                 return IteratorTokenReaderSupport.this.hasNext();
             }
 
             @Override
-            public Token next() {
+            public Token<R> next() {
                 return IteratorTokenReaderSupport.this.next();
             }
 

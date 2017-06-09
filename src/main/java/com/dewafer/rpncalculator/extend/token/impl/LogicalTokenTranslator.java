@@ -7,9 +7,9 @@ import com.dewafer.rpncalculator.extend.token.impl.support.AbstractStringTokenTr
 
 import java.util.regex.Pattern;
 
-public class LogicalTokenTranslator extends AbstractStringTokenTranslator {
+public class LogicalTokenTranslator extends AbstractStringTokenTranslator<Boolean> {
     @Override
-    protected Token translate(String s) {
+    protected Token<Boolean> translate(String s) {
 
         if (BooleanLogicalOperator.SUPPORTED_SYMBOLS.contains(s)) {
             return new BooleanLogicalOperator(s);

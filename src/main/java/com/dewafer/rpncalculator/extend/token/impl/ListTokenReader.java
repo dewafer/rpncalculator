@@ -6,17 +6,17 @@ import com.dewafer.rpncalculator.core.token.support.ListTokenReaderAdaptorSuppor
 
 import java.util.List;
 
-public class ListTokenReader<E> extends ListTokenReaderAdaptorSupport<E> {
+public class ListTokenReader<I, O> extends ListTokenReaderAdaptorSupport<I, O> {
 
-    private TokenTranslatorProcessor<E> translatorProcessor;
+    private TokenTranslatorProcessor<I, O> translatorProcessor;
 
-    public ListTokenReader(List<E> inputList, TokenTranslatorProcessor<E> translatorProcessor) {
+    public ListTokenReader(List<I> inputList, TokenTranslatorProcessor<I, O> translatorProcessor) {
         super(inputList);
         this.translatorProcessor = translatorProcessor;
     }
 
     @Override
-    protected Token translate(E input) {
+    protected Token<O> translate(I input) {
         return translatorProcessor.push(input).done();
     }
 }

@@ -1,6 +1,6 @@
 package com.dewafer.rpncalculator.core.impl;
 
-import com.dewafer.rpncalculator.core.TokenProcessor;
+import com.dewafer.rpncalculator.core.Processor;
 import com.dewafer.rpncalculator.core.exception.IllegalRequiredOperandNumberException;
 import com.dewafer.rpncalculator.core.exception.MissingOperandException;
 import com.dewafer.rpncalculator.core.exception.TooManyOperandsException;
@@ -18,13 +18,12 @@ import java.util.LinkedList;
  *
  * @param <V> 最终返回值的类型
  */
-public class ReversePolishNotationExpressionProcessor<V> implements TokenProcessor<Operand<V>> {
+public class ReversePolishNotationExpressionProcessor<V> implements Processor<Token<V>, Operand<V>> {
 
     private Deque<Operand<V>> operandStack = new LinkedList<Operand<V>>();
 
-    @SuppressWarnings("unchecked")
     @Override
-    public ReversePolishNotationExpressionProcessor<V> push(Token token) {
+    public ReversePolishNotationExpressionProcessor<V> push(Token<V> token) {
         if (token instanceof Operand) {
             process((Operand<V>) token);
             return this;
@@ -58,7 +57,7 @@ public class ReversePolishNotationExpressionProcessor<V> implements TokenProcess
         }
 
         @SuppressWarnings("unchecked")
-        Operand<V> calculatedResult = operator.calculate(arguments.toArray(new Operand[arguments.size()]));
+        Operand<V> calculatedResult = operator.resolve(arguments.toArray(new Operand[arguments.size()]));
         if (calculatedResult != null) {
             operandStack.push(calculatedResult);
         }

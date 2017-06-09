@@ -11,11 +11,11 @@ import com.dewafer.rpncalculator.core.token.Token;
  *
  * @param <T> 传入指定类型T
  */
-public abstract class AbstractTokenTranslator<T> extends SingleStepProcessor<T, Token> implements TokenTranslatorProcessor<T> {
+public abstract class AbstractTokenTranslator<T, R> extends SingleStepProcessor<T, Token<R>> implements TokenTranslatorProcessor<T, R> {
 
 
     @Override
-    protected final Token process(T t) {
+    protected final Token<R> process(T t) {
         if (isLeftParenthesis(t)) {
             return getLeftParenthesis();
         }
@@ -24,7 +24,7 @@ public abstract class AbstractTokenTranslator<T> extends SingleStepProcessor<T, 
             return getRightParenthesis();
         }
 
-        Token translated = translate(t);
+        Token<R> translated = translate(t);
 
         if (translated != null) {
             return translated;
@@ -33,17 +33,19 @@ public abstract class AbstractTokenTranslator<T> extends SingleStepProcessor<T, 
         throw new UnsupportedTokenException();
     }
 
-    protected abstract Token translate(T t);
+    protected abstract Token<R> translate(T t);
 
     protected abstract boolean isLeftParenthesis(T t);
 
     protected abstract boolean isRightParenthesis(T t);
 
-    protected Token getLeftParenthesis() {
+    @SuppressWarnings("unchecked")
+    protected Token<R> getLeftParenthesis() {
         return LeftParenthesis.INSTANCE;
     }
 
-    protected Token getRightParenthesis() {
+    @SuppressWarnings("unchecked")
+    protected Token<R> getRightParenthesis() {
         return RightParenthesis.INSTANCE;
     }
 

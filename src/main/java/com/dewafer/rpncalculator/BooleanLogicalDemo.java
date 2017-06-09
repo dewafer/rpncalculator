@@ -15,9 +15,9 @@ public class BooleanLogicalDemo {
         System.out.println("| Example input: true && ! false =(press enter)      |");
         System.out.println("======================================================");
 
-        RPNCalculator<Integer> processor = new RPNCalculator<Integer>();
+        RPNCalculator<Boolean> processor = new RPNCalculator<Boolean>();
 
-        ScannerTokenReader tokenReader = new ScannerTokenReader(
+        ScannerTokenReader<Boolean> tokenReader = new ScannerTokenReader<Boolean>(
                 new Scanner(System.in), new LogicalTokenTranslator());
 
         try {

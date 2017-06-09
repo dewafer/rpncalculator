@@ -1,4 +1,9 @@
 package com.dewafer.rpncalculator.core.token;
 
-public interface Token {
+/**
+ * 符号
+ *
+ * @param <V> 符号值类型
+ */
+public interface Token<V> {
 }

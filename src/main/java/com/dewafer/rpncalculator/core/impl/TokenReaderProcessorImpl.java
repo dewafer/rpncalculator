@@ -1,8 +1,6 @@
 package com.dewafer.rpncalculator.core.impl;
 
 import com.dewafer.rpncalculator.core.Processor;
-import com.dewafer.rpncalculator.core.TokenProcessor;
-import com.dewafer.rpncalculator.core.TokenReaderProcessor;
 import com.dewafer.rpncalculator.core.token.Token;
 import com.dewafer.rpncalculator.core.token.TokenReader;
 
@@ -11,17 +9,17 @@ import com.dewafer.rpncalculator.core.token.TokenReader;
  *
  * @param <R> 最终返回值的类型
  */
-public class TokenReaderProcessorImpl<R> implements TokenReaderProcessor<R> {
+public class TokenReaderProcessorImpl<T, R> implements Processor<TokenReader<T>,R> {
 
-    private TokenProcessor<R> nextProcessor;
+    private Processor<Token<T>, R> nextProcessor;
 
-    public TokenReaderProcessorImpl(TokenProcessor<R> nextProcessor) {
+    public TokenReaderProcessorImpl(Processor<Token<T>, R> nextProcessor) {
         this.nextProcessor = nextProcessor;
     }
 
     @Override
-    public Processor<TokenReader, R> push(TokenReader tokens) {
-        for (Token token : tokens) {
+    public Processor<TokenReader<T>, R> push(TokenReader<T> tokens) {
+        for (Token<T> token : tokens) {
             nextProcessor.push(token);
         }
         return this;

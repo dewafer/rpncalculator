@@ -1,6 +1,6 @@
 package com.dewafer.rpncalculator.core.impl;
 
-import com.dewafer.rpncalculator.core.TokenProcessor;
+import com.dewafer.rpncalculator.core.Processor;
 import com.dewafer.rpncalculator.core.exception.MismatchedParenthesesException;
 import com.dewafer.rpncalculator.core.exception.UnsupportedTokenException;
 import com.dewafer.rpncalculator.core.token.*;
@@ -14,25 +14,25 @@ import java.util.LinkedList;
  *
  * @param <R> 最终返回值的类型
  */
-public class ShuntingYardTokenProcessor<R> implements TokenProcessor<R> {
+public class ShuntingYardTokenProcessor<T, R> implements Processor<Token<T>, R> {
 
-    private Deque<Token> operatorStack = new LinkedList<Token>();
+    private Deque<Token<T>> operatorStack = new LinkedList<Token<T>>();
     // output
-    private final TokenProcessor<R> nextProcessor;
+    private final Processor<Token<T>, R> nextProcessor;
 
-    public ShuntingYardTokenProcessor(TokenProcessor<R> nextProcessor) {
+    public ShuntingYardTokenProcessor(Processor<Token<T>, R> nextProcessor) {
         this.nextProcessor = nextProcessor;
     }
 
     @Override
-    public ShuntingYardTokenProcessor<R> push(Token token) {
+    public ShuntingYardTokenProcessor<T, R> push(Token<T> token) {
         if (token instanceof Operand) {
-            process((Operand) token);
+            process((Operand<T>) token);
             return this;
         }
 
         if (token instanceof Operator) {
-            process((Operator) token);
+            process((Operator<T>) token);
             return this;
         }
 
@@ -49,17 +49,17 @@ public class ShuntingYardTokenProcessor<R> implements TokenProcessor<R> {
         throw new UnsupportedTokenException();
     }
 
-    protected void process(Operand<?> operand) {
+    protected void process(Operand<T> operand) {
         // add to output queue
         nextProcessor.push(operand);
     }
 
-    protected void process(Operator<?> operator) {
-        Token inStack;
+    protected void process(Operator<T> operator) {
+        Token<T> inStack;
         do {
             inStack = operatorStack.peek();
             if (inStack != null && inStack instanceof Operator) {
-                Operator<?> inStackOperator = (Operator<?>) inStack;
+                Operator<T> inStackOperator = (Operator<T>) inStack;
                 if (hasLessPrecedenceAccordingToAssociativity(operator, inStackOperator)) {
                     // output
                     nextProcessor.push(operatorStack.pop());
@@ -72,11 +72,12 @@ public class ShuntingYardTokenProcessor<R> implements TokenProcessor<R> {
         operatorStack.push(operator);
     }
 
-    private boolean hasLessPrecedenceAccordingToAssociativity(Operator<?> o1, Operator<?> o2) {
+    private boolean hasLessPrecedenceAccordingToAssociativity(Operator<T> o1, Operator<T> o2) {
         return (o1.getAssociativity() == Associativity.LEFT && o1.compareTo(o2) <= 0)
                 || (o1.getAssociativity() == Associativity.RIGHT && o1.compareTo(o2) < 0);
     }
 
+    @SuppressWarnings("unchecked")
     protected void process(LeftParenthesis leftParenthesis) {
         operatorStack.push(leftParenthesis);
     }

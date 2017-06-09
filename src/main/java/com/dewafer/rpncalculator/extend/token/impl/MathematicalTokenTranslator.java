@@ -7,10 +7,10 @@ import com.dewafer.rpncalculator.extend.token.impl.support.AbstractStringTokenTr
 
 import java.util.regex.Pattern;
 
-public class MathematicalTokenTranslator extends AbstractStringTokenTranslator {
+public class MathematicalTokenTranslator extends AbstractStringTokenTranslator<Integer> {
 
     @Override
-    protected Token translate(String s) {
+    protected Token<Integer> translate(String s) {
 
         if (IntegerMathematicalOperator.SUPPORTED_SYMBOLS.contains(s)) {
             return new IntegerMathematicalOperator(s);

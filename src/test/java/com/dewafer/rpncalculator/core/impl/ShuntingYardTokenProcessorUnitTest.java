@@ -1,6 +1,6 @@
 package com.dewafer.rpncalculator.core.impl;
 
-import com.dewafer.rpncalculator.core.TokenProcessor;
+import com.dewafer.rpncalculator.core.Processor;
 import com.dewafer.rpncalculator.core.exception.MismatchedParenthesesException;
 import com.dewafer.rpncalculator.core.exception.UnsupportedTokenException;
 import com.dewafer.rpncalculator.core.token.*;
@@ -16,6 +16,8 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.awt.print.Pageable;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
@@ -24,15 +26,16 @@ import static org.mockito.BDDMockito.inOrder;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 
+@SuppressWarnings("unchecked")
 @RunWith(MockitoJUnitRunner.class)
 public class ShuntingYardTokenProcessorUnitTest {
 
     @Mock
-    TokenProcessor<?> nextProcessor;
+    Processor<Token<?>, ?> nextProcessor;
 
     @InjectMocks
     @Spy
-    ShuntingYardTokenProcessor<?> processor;
+    ShuntingYardTokenProcessor<?, ?> processor;
 
     @Mock
     Operand operand;
@@ -62,7 +65,7 @@ public class ShuntingYardTokenProcessorUnitTest {
     public ExpectedException expectedException = ExpectedException.none();
 
     @Before
-    public void setUp(){
+    public void setUp() {
         // given
         given(operatorPlus.getAssociativity()).willReturn(Associativity.LEFT);
         given(operatorPlusSecond.getAssociativity()).willReturn(Associativity.LEFT);

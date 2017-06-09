@@ -69,14 +69,14 @@ public class ReversePolishNotationExpressionProcessorUnitTest {
     public void testPush_pushOperator() {
         // given
         given(operatorPlus.getRequiredOperandNumber()).willReturn(0);
-        given(operatorPlus.calculate()).willReturn(resultOperand);
+        given(operatorPlus.resolve()).willReturn(resultOperand);
 
         // when
         Operand result = processor.push(operatorPlus).done();
 
         // then
         then(processor).should().process(eq(operatorPlus));
-        then(operatorPlus).should().calculate();
+        then(operatorPlus).should().resolve();
 
         // and
         assertThat(result, is(resultOperand));
@@ -86,14 +86,14 @@ public class ReversePolishNotationExpressionProcessorUnitTest {
     public void testPush_pushOperatorResultIsNull() {
         // given
         given(operatorPlus.getRequiredOperandNumber()).willReturn(0);
-        given(operatorPlus.calculate()).willReturn(null);
+        given(operatorPlus.resolve()).willReturn(null);
 
         // when
         Operand result = processor.push(operatorPlus).done();
 
         // then
         then(processor).should().process(eq(operatorPlus));
-        then(operatorPlus).should().calculate();
+        then(operatorPlus).should().resolve();
 
         // and
         assertThat(result, is(nullValue()));
@@ -103,14 +103,14 @@ public class ReversePolishNotationExpressionProcessorUnitTest {
     public void testPush_pushOperandAndOperator() {
         // given
         given(operatorPlus.getRequiredOperandNumber()).willReturn(1);
-        given(operatorPlus.calculate(eq(operand))).willReturn(resultOperand);
+        given(operatorPlus.resolve(eq(operand))).willReturn(resultOperand);
 
         // when
         Operand result = processor.push(operand).push(operatorPlus).done();
 
         // then
         then(processor).should().process(eq(operatorPlus));
-        then(operatorPlus).should().calculate(eq(operand));
+        then(operatorPlus).should().resolve(eq(operand));
 
         // and
         assertThat(result, is(resultOperand));
@@ -120,14 +120,14 @@ public class ReversePolishNotationExpressionProcessorUnitTest {
     public void testPush_pushOperandPlusOperandSecond() {
         // given
         given(operatorPlus.getRequiredOperandNumber()).willReturn(2);
-        given(operatorPlus.calculate(eq(operand), eq(operandSecond))).willReturn(resultOperand);
+        given(operatorPlus.resolve(eq(operand), eq(operandSecond))).willReturn(resultOperand);
 
         // when
         Operand result = processor.push(operand)
                 .push(operandSecond).push(operatorPlus).done();
 
         // then
-        then(operatorPlus).should().calculate(eq(operand), eq(operandSecond));
+        then(operatorPlus).should().resolve(eq(operand), eq(operandSecond));
 
         // and
         assertThat(result, is(resultOperand));
@@ -151,10 +151,10 @@ public class ReversePolishNotationExpressionProcessorUnitTest {
         given(operatorPlus.getRequiredOperandNumber()).willReturn(2);
         given(operatorMultiply.getRequiredOperandNumber()).willReturn(2);
 
-        given(operatorPlus.calculate(eq(operand), eq(operandSecond))).willReturn(resultOperand);
-        given(operatorPlus.calculate(eq(resultOperand), eq(operand))).willReturn(operandSecond);
-        given(operatorMultiply.calculate(eq(resultOperand), eq(operand))).willReturn(operandSecond);
-        given(operatorMultiply.calculate(eq(operand), eq(operandSecond))).willReturn(resultOperand);
+        given(operatorPlus.resolve(eq(operand), eq(operandSecond))).willReturn(resultOperand);
+        given(operatorPlus.resolve(eq(resultOperand), eq(operand))).willReturn(operandSecond);
+        given(operatorMultiply.resolve(eq(resultOperand), eq(operand))).willReturn(operandSecond);
+        given(operatorMultiply.resolve(eq(operand), eq(operandSecond))).willReturn(resultOperand);
 
         // when
         Operand actualResult = processor.push(operand)
@@ -169,10 +169,10 @@ public class ReversePolishNotationExpressionProcessorUnitTest {
                 .done();
 
         // then
-        then(operatorPlus).should(inOrder).calculate(eq(operand), eq(operandSecond));
-        then(operatorMultiply).should(inOrder).calculate(eq(resultOperand), eq(operand));
-        then(operatorMultiply).should(inOrder).calculate(eq(operand), eq(operandSecond));
-        then(operatorPlus).should(inOrder).calculate(eq(resultOperand), eq(operand));
+        then(operatorPlus).should(inOrder).resolve(eq(operand), eq(operandSecond));
+        then(operatorMultiply).should(inOrder).resolve(eq(resultOperand), eq(operand));
+        then(operatorMultiply).should(inOrder).resolve(eq(operand), eq(operandSecond));
+        then(operatorPlus).should(inOrder).resolve(eq(resultOperand), eq(operand));
 
         // and
         assertThat(actualResult, is(operandSecond));

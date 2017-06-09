@@ -10,14 +10,14 @@ import java.util.Scanner;
 public class IntegerMathematicalDemo {
     public static void main(String[] args) {
         System.out.println("======================================================");
-        System.out.println("| Integer calculator, can calculate +, -, *, /.      |");
+        System.out.println("| Integer calculator, can resolve +, -, *, /.      |");
         System.out.println("| Please place space between numbers and operators.  |");
         System.out.println("| Example input: 256 * 128 =(press enter)            |");
         System.out.println("======================================================");
 
         RPNCalculator<Integer> processor = new RPNCalculator<Integer>();
 
-        ScannerTokenReader tokenReader = new ScannerTokenReader(
+        ScannerTokenReader<Integer> tokenReader = new ScannerTokenReader<Integer>(
                 new Scanner(System.in), new MathematicalTokenTranslator());
 
         try {

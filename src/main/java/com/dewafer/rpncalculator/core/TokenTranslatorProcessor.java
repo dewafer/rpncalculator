@@ -7,5 +7,5 @@ import com.dewafer.rpncalculator.core.token.Token;
  *
  * @param <T> 处理类型
  */
-public interface TokenTranslatorProcessor<T> extends Processor<T, Token> {
+public interface TokenTranslatorProcessor<T, R> extends Processor<T, Token<R>> {
 }

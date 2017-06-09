@@ -4,23 +4,24 @@ import com.dewafer.rpncalculator.core.impl.ReversePolishNotationExpressionProces
 import com.dewafer.rpncalculator.core.impl.ShuntingYardTokenProcessor;
 import com.dewafer.rpncalculator.core.impl.TokenReaderProcessorImpl;
 import com.dewafer.rpncalculator.core.token.Operand;
+import com.dewafer.rpncalculator.core.token.Token;
 import com.dewafer.rpncalculator.core.token.TokenReader;
 
-public class RPNCalculator<R> implements TokenReaderProcessor<R> {
+public class RPNCalculator<R> implements Processor<TokenReader<R>, R> {
 
 
-    private TokenReaderProcessor<Operand<R>> readerProcessor;
+    private Processor<TokenReader<R>, Operand<R>> readerProcessor;
 
     public RPNCalculator() {
-        readerProcessor = new TokenReaderProcessorImpl<Operand<R>>(
-                new ShuntingYardTokenProcessor<Operand<R>>(
+        readerProcessor = new TokenReaderProcessorImpl<R, Operand<R>>(
+                new ShuntingYardTokenProcessor<R, Operand<R>>(
                         new ReversePolishNotationExpressionProcessor<R>()
                 )
         );
     }
 
     @Override
-    public RPNCalculator<R> push(TokenReader tokens) {
+    public RPNCalculator<R> push(TokenReader<R> tokens) {
         readerProcessor.push(tokens);
         return this;
     }

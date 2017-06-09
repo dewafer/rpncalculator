@@ -7,7 +7,7 @@ public abstract class AbstractWeightedOperator<V> extends AbstractValueCalculate
     public abstract int getWeight();
 
     @Override
-    public int compareTo(Operator o) {
+    public int compareTo(Operator<V> o) {
         if (o instanceof AbstractWeightedOperator) {
             return this.getWeight() - ((AbstractWeightedOperator) o).getWeight();
         }

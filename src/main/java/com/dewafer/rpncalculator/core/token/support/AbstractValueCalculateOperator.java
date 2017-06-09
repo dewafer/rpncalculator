@@ -10,7 +10,7 @@ public abstract class AbstractValueCalculateOperator<V> implements Operator<V> {
 
     @SuppressWarnings("unchecked")
     @Override
-    public final Operand<V> calculate(Operand<V>... operands) {
+    public final Operand<V> resolve(Operand<V>... operands) {
 
         // get actual class of V(Value)
         Class<V> actualTypeOfValue = getActualTypeOfValue();
