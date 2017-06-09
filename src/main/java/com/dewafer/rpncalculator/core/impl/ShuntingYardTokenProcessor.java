@@ -74,7 +74,7 @@ public class ShuntingYardTokenProcessor<R> implements TokenProcessor<R> {
 
     private boolean hasLessPrecedenceAccordingToAssociativity(Operator<?> o1, Operator<?> o2) {
         return (o1.getAssociativity() == Associativity.LEFT && o1.compareTo(o2) <= 0)
-                || (o1.getAssociativity() == Associativity.RIGHT && o2.compareTo(o2) < 0);
+                || (o1.getAssociativity() == Associativity.RIGHT && o1.compareTo(o2) < 0);
     }
 
     protected void process(LeftParenthesis leftParenthesis) {
