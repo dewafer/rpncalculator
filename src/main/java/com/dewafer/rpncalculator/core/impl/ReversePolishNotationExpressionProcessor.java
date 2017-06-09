@@ -22,26 +22,27 @@ public class ReversePolishNotationExpressionProcessor<V> implements TokenProcess
 
     private Deque<Operand<V>> operandStack = new LinkedList<Operand<V>>();
 
+    @SuppressWarnings("unchecked")
     @Override
     public ReversePolishNotationExpressionProcessor<V> push(Token token) {
         if (token instanceof Operand) {
-            process((Operand) token);
+            process((Operand<V>) token);
             return this;
         }
 
         if (token instanceof Operator) {
-            process((Operator) token);
+            process((Operator<V>) token);
             return this;
         }
 
         throw new UnsupportedTokenException();
     }
 
-    protected void process(Operand operand) {
+    protected void process(Operand<V> operand) {
         operandStack.push(operand);
     }
 
-    protected void process(Operator operator) {
+    protected void process(Operator<V> operator) {
 
         if (operator.getRequiredOperandNumber() < 0) {
             throw new IllegalRequiredOperandNumberException();
@@ -51,13 +52,13 @@ public class ReversePolishNotationExpressionProcessor<V> implements TokenProcess
             throw new MissingOperandException();
         }
 
-        Deque<Operand> arguments = new LinkedList<Operand>();
+        Deque<Operand<V>> arguments = new LinkedList<Operand<V>>();
         for (int i = 0; i < operator.getRequiredOperandNumber(); i++) {
             arguments.push(operandStack.pop());
         }
 
         @SuppressWarnings("unchecked")
-        Operand<V> calculatedResult = operator.calculate(arguments.toArray(new Operand[0]));
+        Operand<V> calculatedResult = operator.calculate(arguments.toArray(new Operand[arguments.size()]));
         if (calculatedResult != null) {
             operandStack.push(calculatedResult);
         }
