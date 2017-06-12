@@ -1,7 +1,18 @@
 package com.dewafer.rpncalculator.core.token;
 
-public interface RightParenthesis extends Parenthesis {
+public final class RightParenthesis<T> implements Parenthesis<T> {
 
-    public static final RightParenthesis INSTANCE = new RightParenthesis() {
-    };
+    private RightParenthesis() {
+    }
+
+    private static RightParenthesis<?> INSTANCE;
+
+    @SuppressWarnings("unchecked")
+    public static <R> RightParenthesis<R> getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new RightParenthesis<R>();
+        }
+        return (RightParenthesis<R>) INSTANCE;
+    }
+
 }

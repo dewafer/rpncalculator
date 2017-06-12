@@ -41,12 +41,12 @@ public abstract class AbstractTokenTranslator<T, R> extends SingleStepProcessor<
 
     @SuppressWarnings("unchecked")
     protected Token<R> getLeftParenthesis() {
-        return LeftParenthesis.INSTANCE;
+        return LeftParenthesis.getInstance();
     }
 
     @SuppressWarnings("unchecked")
     protected Token<R> getRightParenthesis() {
-        return RightParenthesis.INSTANCE;
+        return RightParenthesis.getInstance();
     }
 
 }
